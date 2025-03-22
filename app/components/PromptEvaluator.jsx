@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { XCircle, AlertCircle, CheckCircle, Star, RefreshCw, Loader2, Eye, EyeOff } from 'lucide-react';
 import CustomRadarChart from './CustomRadarChart';
+import { evaluateWithAI } from '../services/evaluationService';
 
 // Componente principal
 export default function PromptEvaluator() {
@@ -81,9 +82,14 @@ export default function PromptEvaluator() {
   };
 
   // Función para evaluar con IA
-  const evaluateWithAI = async () => {
+  const handleAIEvaluation = async () => {
     if (!responseText.trim()) {
       alert("Por favor, ingresa una respuesta para evaluar");
+      return;
+    }
+
+    if (!promptText.trim()) {
+      alert("Por favor, ingresa el prompt utilizado");
       return;
     }
 
@@ -100,55 +106,22 @@ export default function PromptEvaluator() {
     setIsEvaluating(true);
     
     try {
-      // Aquí simularemos la llamada a APIs de modelos de IA
-      // En una implementación real, se harían llamadas a las APIs configuradas
-
-      // Crear un listado con los criterios para incluir en el prompt
-      const criteriaList = criteria.map(c => `${c.id}. ${c.name}: ${c.description}`).join('\n');
-      
-      // Crear peticiones para cada modelo habilitado
-      const enabledModelRequests = Object.entries(apiConfig)
-        .filter(([_, config]) => config.enabled)
-        .map(async ([modelName, config]) => {
-          // Simular delay para demostración
-          await new Promise(resolve => setTimeout(resolve, 1500 + Math.random() * 1500));
-          
-          // En una implementación real, aquí se haría la llamada a la API
-          // con el modelo, apiKey y url correspondientes
-          
-          // Simulamos respuestas aleatorias para demostración
-          const modelScores = {};
-          criteria.forEach(criterion => {
-            // Generar un número aleatorio entre 1 y 10
-            modelScores[criterion.id] = Math.floor(Math.random() * 10) + 1;
-          });
-          
-          return {
-            model: modelName,
-            scores: modelScores
-          };
-        });
-      
-      // Esperar a que todas las evaluaciones terminen
-      const evaluationResults = await Promise.all(enabledModelRequests);
-      
-      // Calcular promedios para cada criterio
-      const averageScores = {};
-      criteria.forEach(criterion => {
-        const scores = evaluationResults.map(result => result.scores[criterion.id]);
-        const sum = scores.reduce((acc, score) => acc + score, 0);
-        averageScores[criterion.id] = Math.round(sum / scores.length);
-      });
+      const result = await evaluateWithAI(apiConfig, promptText, responseText);
       
       // Actualizar puntuaciones en la UI
-      setCriteria(criteria.map(criterion => ({
-        ...criterion,
-        score: averageScores[criterion.id]
-      })));
-      
-      // Mostrar resultados por modelo en la consola (para depuración)
-      console.log("Resultados de evaluación por modelo:", evaluationResults);
-      console.log("Puntuaciones promedio:", averageScores);
+      setCriteria(criteria.map(criterion => {
+        const criterionKey = criterion.name.toLowerCase().replace(/[^a-z0-9]/g, '_');
+        return {
+          ...criterion,
+          score: result.averageScores[criterionKey] || criterion.score
+        };
+      }));
+
+      // Mostrar errores si los hay
+      if (result.errors.length > 0) {
+        const errorMessage = result.errors.map(e => `${e.model}: ${e.error}`).join('\n');
+        alert(`Algunas evaluaciones fallaron:\n${errorMessage}`);
+      }
       
     } catch (error) {
       console.error("Error al realizar evaluación con IA:", error);
@@ -323,7 +296,7 @@ export default function PromptEvaluator() {
             </div>
             <div className="mt-4 flex justify-end">
               <button
-                onClick={evaluateWithAI}
+                onClick={handleAIEvaluation}
                 disabled={isEvaluating || !hasEnabledModels}
                 className={`flex items-center px-4 py-2 rounded font-medium ${
                   isEvaluating || !hasEnabledModels
