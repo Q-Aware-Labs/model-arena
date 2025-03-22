@@ -42,7 +42,7 @@ const evaluateWithClaude = async (apiKey, prompt, response) => {
   try {
     const evaluationPrompt = generateEvaluationPrompt(prompt, response);
     
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const apiResponse = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -60,11 +60,11 @@ const evaluateWithClaude = async (apiKey, prompt, response) => {
       })
     });
 
-    if (!response.ok) {
+    if (!apiResponse.ok) {
       throw new Error('Error en la llamada a Claude API');
     }
 
-    const data = await response.json();
+    const data = await apiResponse.json();
     const evaluation = JSON.parse(data.content[0].text);
     
     // Convertir calificaciones a números
@@ -83,7 +83,7 @@ const evaluateWithChatGPT = async (apiKey, prompt, response) => {
   try {
     const evaluationPrompt = generateEvaluationPrompt(prompt, response);
     
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const apiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -99,11 +99,11 @@ const evaluateWithChatGPT = async (apiKey, prompt, response) => {
       })
     });
 
-    if (!response.ok) {
+    if (!apiResponse.ok) {
       throw new Error('Error en la llamada a ChatGPT API');
     }
 
-    const data = await response.json();
+    const data = await apiResponse.json();
     const evaluation = JSON.parse(data.choices[0].message.content);
     
     // Convertir calificaciones a números
@@ -122,7 +122,7 @@ const evaluateWithGemini = async (apiKey, prompt, response) => {
   try {
     const evaluationPrompt = generateEvaluationPrompt(prompt, response);
     
-    const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent', {
+    const apiResponse = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -140,11 +140,11 @@ const evaluateWithGemini = async (apiKey, prompt, response) => {
       })
     });
 
-    if (!response.ok) {
+    if (!apiResponse.ok) {
       throw new Error('Error en la llamada a Gemini API');
     }
 
-    const data = await response.json();
+    const data = await apiResponse.json();
     const evaluation = JSON.parse(data.candidates[0].content.parts[0].text);
     
     // Convertir calificaciones a números
@@ -163,7 +163,7 @@ const evaluateWithDeepSeek = async (apiKey, prompt, response) => {
   try {
     const evaluationPrompt = generateEvaluationPrompt(prompt, response);
     
-    const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+    const apiResponse = await fetch('https://api.deepseek.com/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -175,22 +175,38 @@ const evaluateWithDeepSeek = async (apiKey, prompt, response) => {
           role: 'user',
           content: evaluationPrompt
         }],
-        temperature: 0.7
+        stream: false
       })
     });
 
-    if (!response.ok) {
+    if (!apiResponse.ok) {
       throw new Error('Error en la llamada a DeepSeek API');
     }
 
-    const data = await response.json();
-    const evaluation = JSON.parse(data.choices[0].message.content);
+    const data = await apiResponse.json();
     
-    // Convertir calificaciones a números
-    return Object.entries(evaluation).reduce((acc, [key, value]) => {
-      acc[key] = gradeToNumber(value);
-      return acc;
-    }, {});
+    // Extraer el contenido de la respuesta
+    const content = data.choices[0].message.content;
+    
+    // Buscar el primer objeto JSON en el contenido
+    const jsonMatch = content.match(/\{[\s\S]*?\}(?=\s*$|\s*[^,}\s])/);
+    
+    if (!jsonMatch) {
+      throw new Error('No se encontró un objeto JSON válido en la respuesta');
+    }
+    
+    try {
+      const evaluation = JSON.parse(jsonMatch[0]);
+      
+      // Convertir calificaciones a números
+      return Object.entries(evaluation).reduce((acc, [key, value]) => {
+        acc[key] = gradeToNumber(value);
+        return acc;
+      }, {});
+    } catch (parseError) {
+      console.error('Error al parsear la respuesta de DeepSeek:', parseError);
+      throw new Error('La respuesta del modelo no está en formato JSON válido');
+    }
   } catch (error) {
     console.error('Error en evaluación con DeepSeek:', error);
     throw error;
@@ -202,7 +218,7 @@ const evaluateWithLLaMA = async (apiKey, prompt, response) => {
   try {
     const evaluationPrompt = generateEvaluationPrompt(prompt, response);
     
-    const response = await fetch('https://api.example.com/llama/v1/chat/completions', {
+    const apiResponse = await fetch('https://api.example.com/llama/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -218,11 +234,11 @@ const evaluateWithLLaMA = async (apiKey, prompt, response) => {
       })
     });
 
-    if (!response.ok) {
+    if (!apiResponse.ok) {
       throw new Error('Error en la llamada a LLaMA API');
     }
 
-    const data = await response.json();
+    const data = await apiResponse.json();
     const evaluation = JSON.parse(data.choices[0].message.content);
     
     // Convertir calificaciones a números
