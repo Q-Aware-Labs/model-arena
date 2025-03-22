@@ -1,5 +1,8 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+I built this project prompting and instructing AI to generate the code for me. I used Claude Sonnet 3.7, 
+Cursor, DeepSeek and GitHub Copilot.
+
 ## Getting Started
 
 First, run the development server:
