@@ -20,6 +20,18 @@ You can start editing the page by modifying `app/page.js`. The page auto-updates
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Main Functionality
+
+This project is a prompt evaluation tool that allows users to evaluate prompts using an AI model or manually. Users can input prompts and receive evaluations based on predefined criteria.
+
+### Features
+
+- **AI Evaluation**: Evaluate prompts using an integrated AI model.
+- **Manual Evaluation**: Manually evaluate prompts based on user-defined criteria.
+- **Real-time Feedback**: Get instant feedback as you type your prompts.
+- **History Tracking**: Keep track of previously evaluated prompts.
+- **Customizable Criteria**: Define and customize the criteria for manual evaluations.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
