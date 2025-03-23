@@ -5,6 +5,12 @@ Cursor, DeepSeek and GitHub Copilot.
 
 ![ModelArena](/ModelArena_logo.png)
 
+[![Next.js](https://img.shields.io/badge/Next.js-13.0+-000000?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/yourusername/model-arena/issues)
+[![Open Source](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://opensource.org/)
+[![Powered by AI](https://img.shields.io/badge/Powered%20by-AI-blueviolet)](https://github.com/yourusername/model-arena)
+
 ### Why ModelArena?
 
 AI Response Evaluation Platform
