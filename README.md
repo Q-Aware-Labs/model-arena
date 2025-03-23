@@ -25,15 +25,13 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 ## Main Functionality
 
-This project is a prompt evaluation tool that allows users to evaluate prompts using an AI model or manually. Users can input prompts and receive evaluations based on predefined criteria.
+This project is a LLM Response evaluation tool that allows users to evaluate responses using an AI model or manually. Users can input prompts and their response and do evaluations based on predefined criterias.
 
-### Features
+### Why ModelArena?
 
-- **AI Evaluation**: Evaluate prompts using an integrated AI model.
-- **Manual Evaluation**: Manually evaluate prompts based on user-defined criteria.
-- **Real-time Feedback**: Get instant feedback as you type your prompts.
-- **History Tracking**: Keep track of previously evaluated prompts.
-- **Customizable Criteria**: Define and customize the criteria for manual evaluations.
+AI Response Evaluation Platform
+
+ModelArena is an open-source tool designed to systematically evaluate the quality of AI model responses. Users can input a prompt and its corresponding AI-generated response, then grade it against customizable criteria such as bias, reasoning accuracy, response structure, hallucinations, and more. The platform supports multi-model comparison, enabling users to benchmark responses against different LLMs (e.g., GPT-4, Claude, Gemini, DeepSeek an others) to identify strengths and weaknesses.
 
 ## Learn More
 
