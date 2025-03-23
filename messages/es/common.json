@@ -1,0 +1,93 @@
+{
+  "title": "ModelArena",
+  "subtitle": "Construido con Desarrollo Asistido por IA",
+  "evaluation": {
+    "title": "Modo de evaluación",
+    "description": "Elige cómo quieres evaluar las respuestas",
+    "manual": "Manual",
+    "ai": "Con IA"
+  },
+  "criteria": {
+    "bias": {
+      "name": "Sesgo",
+      "description": "Ausencia de tendencias ideológicas, culturales o de género"
+    },
+    "causal_reasoning": {
+      "name": "Razonamiento causal",
+      "description": "Coherencia lógica en relaciones causa-efecto"
+    },
+    "paraphrase_robustness": {
+      "name": "Robustez a parafraseo",
+      "description": "Estabilidad ante cambios en la formulación"
+    },
+    "abstraction_capacity": {
+      "name": "Capacidad de abstracción",
+      "description": "Generalización de conceptos a nuevos contextos"
+    },
+    "hallucinations": {
+      "name": "Alucinaciones",
+      "description": "Ausencia de información fabricada"
+    },
+    "ambiguity_handling": {
+      "name": "Manejo de ambigüedad",
+      "description": "Tratamiento de múltiples interpretaciones"
+    },
+    "knowledge_limits": {
+      "name": "Límites de conocimiento",
+      "description": "Reconocimiento de lo que no sabe"
+    },
+    "contextual_understanding": {
+      "name": "Comprensión contextual",
+      "description": "Integración de elementos visuales y textuales"
+    },
+    "internal_consistency": {
+      "name": "Consistencia interna",
+      "description": "Ausencia de contradicciones"
+    },
+    "negation_processing": {
+      "name": "Procesamiento de negaciones",
+      "description": "Manejo de afirmaciones negativas"
+    },
+    "intention_detection": {
+      "name": "Detección de intenciones",
+      "description": "Identificación de lo que busca el usuario"
+    },
+    "metacognition": {
+      "name": "Metacognición",
+      "description": "Reflexión sobre sus propias limitaciones"
+    }
+  },
+  "actions": {
+    "new_evaluation": "Nueva Evaluación",
+    "save_evaluation": "Guardar Evaluación",
+    "evaluate": "Evaluar",
+    "toggle_prompt": "Alternar Prompt"
+  },
+  "models": {
+    "claude": "Claude",
+    "chatgpt": "ChatGPT",
+    "gemini": "Gemini",
+    "llama": "LLaMA",
+    "deepseek": "DeepSeek",
+    "other": "Otro"
+  },
+  "evaluationSection": {
+    "used_prompt": "Prompt utilizado",
+    "response_to_evaluate": "Respuesta a evaluar",
+    "evaluation_criteria": "Criterios de evaluación",
+    "evaluation_results": "Resultado de la evaluación",
+    "global_score": "Puntuación global",
+    "score": "Puntuación",
+    "score_legend": "Puntuación",
+    "grade_labels": {
+      "poor": "Deficiente",
+      "acceptable": "Aceptable",
+      "good": "Bueno",
+      "excellent": "Excelente"
+    },
+    "placeholders": {
+      "prompt": "Ingresa el prompt que utilizaste para obtener la respuesta...",
+      "response": "Pega aquí la respuesta del LLM que quieres evaluar..."
+    }
+  }
+} 

@@ -1,0 +1,93 @@
+{
+  "title": "ModelArena",
+  "subtitle": "Built with AI-Assisted Development",
+  "evaluation": {
+    "title": "Evaluation Mode",
+    "description": "Choose how you want to evaluate responses",
+    "manual": "Manual",
+    "ai": "With AI"
+  },
+  "criteria": {
+    "bias": {
+      "name": "Bias",
+      "description": "Absence of ideological, cultural, or gender biases"
+    },
+    "causal_reasoning": {
+      "name": "Causal Reasoning",
+      "description": "Logical coherence in cause-effect relationships"
+    },
+    "paraphrase_robustness": {
+      "name": "Paraphrase Robustness",
+      "description": "Stability when formulation changes"
+    },
+    "abstraction_capacity": {
+      "name": "Abstraction Capacity",
+      "description": "Generalization of concepts to new contexts"
+    },
+    "hallucinations": {
+      "name": "Hallucinations",
+      "description": "Absence of fabricated information"
+    },
+    "ambiguity_handling": {
+      "name": "Ambiguity Handling",
+      "description": "Treatment of multiple interpretations"
+    },
+    "knowledge_limits": {
+      "name": "Knowledge Limits",
+      "description": "Recognition of what it doesn't know"
+    },
+    "contextual_understanding": {
+      "name": "Contextual Understanding",
+      "description": "Integration of visual and textual elements"
+    },
+    "internal_consistency": {
+      "name": "Internal Consistency",
+      "description": "Absence of contradictions"
+    },
+    "negation_processing": {
+      "name": "Negation Processing",
+      "description": "Handling of negative statements"
+    },
+    "intention_detection": {
+      "name": "Intention Detection",
+      "description": "Identification of user's intent"
+    },
+    "metacognition": {
+      "name": "Metacognition",
+      "description": "Reflection on its own limitations"
+    }
+  },
+  "actions": {
+    "new_evaluation": "New Evaluation",
+    "save_evaluation": "Save Evaluation",
+    "evaluate": "Evaluate",
+    "toggle_prompt": "Toggle Prompt"
+  },
+  "models": {
+    "claude": "Claude",
+    "chatgpt": "ChatGPT",
+    "gemini": "Gemini",
+    "llama": "LLaMA",
+    "deepseek": "DeepSeek",
+    "other": "Other"
+  },
+  "evaluationSection": {
+    "used_prompt": "Used Prompt",
+    "response_to_evaluate": "Response to Evaluate",
+    "evaluation_criteria": "Evaluation Criteria",
+    "evaluation_results": "Evaluation Results",
+    "global_score": "Global Score",
+    "score": "Score",
+    "score_legend": "Score",
+    "grade_labels": {
+      "poor": "Poor",
+      "acceptable": "Acceptable",
+      "good": "Good",
+      "excellent": "Excellent"
+    },
+    "placeholders": {
+      "prompt": "Enter the prompt you used to get the response...",
+      "response": "Paste here the LLM response you want to evaluate..."
+    }
+  }
+} 

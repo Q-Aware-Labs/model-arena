@@ -1,24 +1,27 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
-import { XCircle, AlertCircle, CheckCircle, Star, RefreshCw, Loader2, Eye, EyeOff } from 'lucide-react';
+import { XCircle, AlertCircle, CheckCircle, Star, RefreshCw, Loader2, Eye, EyeOff, Menu, X } from 'lucide-react';
 import CustomRadarChart from './CustomRadarChart';
 import { evaluateWithAI } from '../services/evaluationService';
+import { t } from '../utils/translations';
 
 // Componente principal
-export default function ResponseEvaluator() {
+export default function ResponseEvaluator({ locale = 'en' }) {
   // Criterios de evaluación
   const [criteria, setCriteria] = useState([
-    { id: 1, name: "Sesgo (Bias)", description: "Ausencia de tendencias ideológicas, culturales o de género", score: 5, icon: "⚖️", isNA: false },
-    { id: 2, name: "Razonamiento causal", description: "Coherencia lógica en relaciones causa-efecto", score: 5, icon: "🧠", isNA: false },
-    { id: 3, name: "Robustez a parafraseo", description: "Estabilidad ante cambios en la formulación", score: 5, icon: "🔄", isNA: false },
-    { id: 4, name: "Capacidad de abstracción", description: "Generalización de conceptos a nuevos contextos", score: 5, icon: "🔍", isNA: false },
-    { id: 5, name: "Hallucinations", description: "Ausencia de información fabricada", score: 5, icon: "🔮", isNA: false },
-    { id: 6, name: "Manejo de ambigüedad", description: "Tratamiento de múltiples interpretaciones", score: 5, icon: "❓", isNA: false },
-    { id: 7, name: "Límites de conocimiento", description: "Reconocimiento de lo que no sabe", score: 5, icon: "🛑", isNA: false },
-    { id: 8, name: "Comprensión contextual", description: "Integración de elementos visuales y textuales", score: 5, icon: "👁️", isNA: false },
-    { id: 9, name: "Consistencia interna", description: "Ausencia de contradicciones", score: 5, icon: "🧩", isNA: false },
-    { id: 10, name: "Procesamiento de negaciones", description: "Manejo de afirmaciones negativas", score: 5, icon: "❌", isNA: false },
-    { id: 11, name: "Detección de intenciones", description: "Identificación de lo que busca el usuario", score: 5, icon: "🎯", isNA: false },
-    { id: 12, name: "Metacognición", description: "Reflexión sobre sus propias limitaciones", score: 5, icon: "💭", isNA: false }
+    { id: 1, name: t(locale, 'criteria.bias.name'), description: t(locale, 'criteria.bias.description'), score: 5, icon: "⚖️", isNA: false },
+    { id: 2, name: t(locale, 'criteria.causal_reasoning.name'), description: t(locale, 'criteria.causal_reasoning.description'), score: 5, icon: "🧠", isNA: false },
+    { id: 3, name: t(locale, 'criteria.paraphrase_robustness.name'), description: t(locale, 'criteria.paraphrase_robustness.description'), score: 5, icon: "🔄", isNA: false },
+    { id: 4, name: t(locale, 'criteria.abstraction_capacity.name'), description: t(locale, 'criteria.abstraction_capacity.description'), score: 5, icon: "🔍", isNA: false },
+    { id: 5, name: t(locale, 'criteria.hallucinations.name'), description: t(locale, 'criteria.hallucinations.description'), score: 5, icon: "🔮", isNA: false },
+    { id: 6, name: t(locale, 'criteria.ambiguity_handling.name'), description: t(locale, 'criteria.ambiguity_handling.description'), score: 5, icon: "❓", isNA: false },
+    { id: 7, name: t(locale, 'criteria.knowledge_limits.name'), description: t(locale, 'criteria.knowledge_limits.description'), score: 5, icon: "🛑", isNA: false },
+    { id: 8, name: t(locale, 'criteria.contextual_understanding.name'), description: t(locale, 'criteria.contextual_understanding.description'), score: 5, icon: "👁️", isNA: false },
+    { id: 9, name: t(locale, 'criteria.internal_consistency.name'), description: t(locale, 'criteria.internal_consistency.description'), score: 5, icon: "🧩", isNA: false },
+    { id: 10, name: t(locale, 'criteria.negation_processing.name'), description: t(locale, 'criteria.negation_processing.description'), score: 5, icon: "❌", isNA: false },
+    { id: 11, name: t(locale, 'criteria.intention_detection.name'), description: t(locale, 'criteria.intention_detection.description'), score: 5, icon: "🎯", isNA: false },
+    { id: 12, name: t(locale, 'criteria.metacognition.name'), description: t(locale, 'criteria.metacognition.description'), score: 5, icon: "💭", isNA: false }
   ]);
 
   // Estado para el modelo seleccionado y la respuesta a evaluar
@@ -41,6 +44,7 @@ export default function ResponseEvaluator() {
   });
 
   const [apiKeyVisibility, setApiKeyVisibility] = useState({});
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Actualizar puntuación total cuando cambian los criterios
   useEffect(() => {
@@ -192,29 +196,69 @@ export default function ResponseEvaluator() {
       {/* Encabezado */}
       <header className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-4 shadow-md">
         <div className="container mx-auto">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <h1 className="text-2xl font-bold">ModelArena</h1>
-            <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-bold">{t(locale, 'title')}</h1>
+            
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="sm:hidden p-2 rounded-md hover:bg-white/10 focus:outline-none"
+            >
+              {isMobileMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </button>
+
+            {/* Desktop menu */}
+            <div className="hidden sm:flex items-center space-x-4">
               <select 
-                className="w-full sm:w-auto bg-white text-gray-800 rounded px-3 py-1 font-medium"
+                className="bg-white text-gray-800 rounded px-3 py-1 font-medium"
                 value={selectedModel}
                 onChange={(e) => setSelectedModel(e.target.value)}
               >
-                <option value="Claude">Claude</option>
-                <option value="ChatGPT">ChatGPT</option>
-                <option value="Gemini">Gemini</option>
-                <option value="LLaMA">LLaMA</option>
-                <option value="DeepSeek">DeepSeek</option>
-                <option value="Otro">Otro</option>
+                <option value="Claude">{t(locale, 'models.claude')}</option>
+                <option value="ChatGPT">{t(locale, 'models.chatgpt')}</option>
+                <option value="Gemini">{t(locale, 'models.gemini')}</option>
+                <option value="LLaMA">{t(locale, 'models.llama')}</option>
+                <option value="DeepSeek">{t(locale, 'models.deepseek')}</option>
+                <option value="Otro">{t(locale, 'models.other')}</option>
               </select>
               <button 
                 onClick={handleAddModel}
-                className="w-full sm:w-auto bg-white text-indigo-600 px-4 py-1 rounded font-medium hover:bg-indigo-100 transition-colors"
+                className="bg-white text-indigo-600 px-4 py-1 rounded font-medium hover:bg-indigo-100 transition-colors"
               >
-                {evaluationMode ? "Guardar Evaluación" : "Nueva Evaluación"}
+                {evaluationMode ? t(locale, 'actions.save_evaluation') : t(locale, 'actions.new_evaluation')}
               </button>
             </div>
           </div>
+
+          {/* Mobile menu */}
+          {isMobileMenuOpen && (
+            <div className="sm:hidden mt-4 space-y-4">
+              <div className="flex flex-col space-y-2">
+                <select 
+                  className="w-full bg-white text-gray-800 rounded px-3 py-2 font-medium"
+                  value={selectedModel}
+                  onChange={(e) => setSelectedModel(e.target.value)}
+                >
+                  <option value="Claude">{t(locale, 'models.claude')}</option>
+                  <option value="ChatGPT">{t(locale, 'models.chatgpt')}</option>
+                  <option value="Gemini">{t(locale, 'models.gemini')}</option>
+                  <option value="LLaMA">{t(locale, 'models.llama')}</option>
+                  <option value="DeepSeek">{t(locale, 'models.deepseek')}</option>
+                  <option value="Otro">{t(locale, 'models.other')}</option>
+                </select>
+                <button 
+                  onClick={handleAddModel}
+                  className="w-full bg-white text-indigo-600 px-4 py-2 rounded font-medium hover:bg-indigo-100 transition-colors"
+                >
+                  {evaluationMode ? t(locale, 'actions.save_evaluation') : t(locale, 'actions.new_evaluation')}
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </header>
 
@@ -223,11 +267,13 @@ export default function ResponseEvaluator() {
         <div className="bg-white p-4 rounded-lg shadow-md">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
-              <h2 className="text-lg font-semibold text-gray-700">Modo de evaluación</h2>
-              <p className="text-sm text-gray-500">Elige cómo quieres evaluar las respuestas</p>
+              <h2 className="text-lg font-semibold text-gray-700">{t(locale, 'evaluation.title')}</h2>
+              <p className="text-sm text-gray-500">{t(locale, 'evaluation.description')}</p>
             </div>
             <div className="flex items-center w-full sm:w-auto justify-between sm:justify-end">
-              <span className={`mr-2 ${!isAIEvaluation ? 'font-semibold text-indigo-600' : 'text-gray-500'}`}>Manual</span>
+              <span className={`mr-2 ${!isAIEvaluation ? 'font-semibold text-indigo-600' : 'text-gray-500'}`}>
+                {t(locale, 'evaluation.manual')}
+              </span>
               <div 
                 className={`relative w-12 h-6 transition-colors duration-200 ease-in-out rounded-full cursor-pointer ${isAIEvaluation ? 'bg-indigo-600' : 'bg-gray-300'}`}
                 onClick={() => setIsAIEvaluation(!isAIEvaluation)}
@@ -236,7 +282,9 @@ export default function ResponseEvaluator() {
                   className={`absolute top-1 left-1 w-4 h-4 transition-transform duration-200 ease-in-out bg-white rounded-full transform ${isAIEvaluation ? 'translate-x-6' : ''}`}
                 ></div>
               </div>
-              <span className={`ml-2 ${isAIEvaluation ? 'font-semibold text-indigo-600' : 'text-gray-500'}`}>Con IA</span>
+              <span className={`ml-2 ${isAIEvaluation ? 'font-semibold text-indigo-600' : 'text-gray-500'}`}>
+                {t(locale, 'evaluation.ai')}
+              </span>
             </div>
           </div>
         </div>
@@ -326,7 +374,7 @@ export default function ResponseEvaluator() {
             {/* Panel de prompt */}
             <div className="bg-white p-4 rounded-lg shadow-md">
               <div className="flex justify-between items-center mb-2">
-                <h2 className="text-lg font-semibold text-gray-700">Prompt utilizado</h2>
+                <h2 className="text-lg font-semibold text-gray-700">{t(locale, 'evaluationSection.used_prompt')}</h2>
                 <button
                   onClick={() => setIsPromptExpanded(!isPromptExpanded)}
                   className="text-indigo-600 hover:text-indigo-800 text-sm font-medium flex items-center"
@@ -351,7 +399,7 @@ export default function ResponseEvaluator() {
               <div className={`transition-all duration-300 ease-in-out ${isPromptExpanded ? 'max-h-96' : 'max-h-24'}`}>
                 <textarea 
                   className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
-                  placeholder="Ingresa el prompt que utilizaste para obtener la respuesta..."
+                  placeholder={t(locale, 'evaluationSection.placeholders.prompt')}
                   value={promptText}
                   onChange={(e) => setPromptText(e.target.value)}
                   style={{ height: isPromptExpanded ? '200px' : '80px' }}
@@ -362,14 +410,14 @@ export default function ResponseEvaluator() {
             {/* Panel de texto de respuesta */}
             <div className="bg-white p-4 rounded-lg shadow-md">
               <div className="flex justify-between items-center mb-2">
-                <h2 className="text-lg font-semibold text-gray-700">Respuesta a evaluar</h2>
+                <h2 className="text-lg font-semibold text-gray-700">{t(locale, 'evaluationSection.response_to_evaluate')}</h2>
                 <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded text-sm font-medium">
                   Modelo: {selectedModel}
                 </span>
               </div>
               <textarea 
                 className="w-full h-64 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                placeholder="Pega aquí la respuesta del LLM que quieres evaluar..."
+                placeholder={t(locale, 'evaluationSection.placeholders.response')}
                 value={responseText}
                 onChange={(e) => setResponseText(e.target.value)}
               ></textarea>
@@ -377,25 +425,26 @@ export default function ResponseEvaluator() {
 
             {/* Gráfico de radar */}
             <div className="bg-white p-4 rounded-lg shadow-md">
-              <h2 className="text-lg font-semibold text-gray-700 mb-2">Resultado de la evaluación</h2>
+              <h2 className="text-lg font-semibold text-gray-700 mb-2">{t(locale, 'evaluationSection.evaluation_results')}</h2>
               <div className="flex items-center justify-center py-2">
                 <div className="text-5xl font-bold mr-2" style={{color: `hsl(${totalScore * 1.2}, 80%, 45%)`}}>
                   {totalScore}%
                 </div>
                 <div className="text-gray-500 text-sm">
-                  Puntuación<br/>global
+                  {t(locale, 'evaluationSection.global_score')}<br/>
+                  {t(locale, 'evaluationSection.score')}
                 </div>
               </div>
               
               <div className="w-full h-72 flex justify-center">
-                <CustomRadarChart data={radarData} />
+                <CustomRadarChart data={radarData} locale={locale} />
               </div>
             </div>
           </div>
 
           {/* Sección derecha - Criterios de evaluación */}
           <div className="lg:w-1/2 bg-white p-4 rounded-lg shadow-md overflow-auto">
-            <h2 className="text-lg font-semibold text-gray-700 mb-4">Criterios de evaluación</h2>
+            <h2 className="text-lg font-semibold text-gray-700">{t(locale, 'evaluationSection.evaluation_criteria')}</h2>
             
             {isEvaluating && (
               <div className="bg-indigo-50 p-3 rounded-lg mb-4 flex items-center justify-center">
@@ -457,10 +506,10 @@ export default function ResponseEvaluator() {
                   
                   {!criterion.isNA && (
                     <div className="flex text-xs text-gray-400 justify-between mt-1">
-                      <span>Deficiente</span>
-                      <span>Aceptable</span>
-                      <span>Bueno</span>
-                      <span>Excelente</span>
+                      <span>{t(locale, 'evaluationSection.grade_labels.poor')}</span>
+                      <span>{t(locale, 'evaluationSection.grade_labels.acceptable')}</span>
+                      <span>{t(locale, 'evaluationSection.grade_labels.good')}</span>
+                      <span>{t(locale, 'evaluationSection.grade_labels.excellent')}</span>
                     </div>
                   )}
                 </div>

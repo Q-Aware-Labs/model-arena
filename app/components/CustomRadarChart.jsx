@@ -1,7 +1,8 @@
 import React from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { t } from '../utils/translations';
 
-function CustomRadarChart({ data }) {
+function CustomRadarChart({ data, locale = 'en' }) {
   // Using Recharts for better layout management
   return (
     <ResponsiveContainer width="100%" height="100%">
@@ -26,7 +27,7 @@ function CustomRadarChart({ data }) {
           tickCount={5}
         />
         <Radar 
-          name="Puntuación" 
+          name={t(locale, 'evaluationSection.score_legend')}
           dataKey="A" 
           stroke="#8884d8" 
           fill="#8884d8" 
@@ -34,7 +35,7 @@ function CustomRadarChart({ data }) {
           strokeWidth={2}
         />
         <Tooltip 
-          formatter={(value) => [`${value}/10`, 'Puntuación']}
+          formatter={(value) => [`${value}/10`, t(locale, 'evaluationSection.score_legend')]}
           labelFormatter={(label) => `${label}`}
           contentStyle={{ fontSize: '12px' }}
         />
