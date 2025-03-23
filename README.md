@@ -3,6 +3,14 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 I built this project prompting and instructing AI to generate the code for me. I used Claude Sonnet 3.7, 
 Cursor, DeepSeek and GitHub Copilot.
 
+![ModelArena](/ModelArena_logo.png)
+
+### Why ModelArena?
+
+AI Response Evaluation Platform
+
+ModelArena is an open-source tool designed to systematically evaluate the quality of AI model responses. Users can input a prompt and its corresponding AI-generated response, then grade it against customizable criteria such as bias, reasoning accuracy, response structure, hallucinations, and more. The platform supports multi-model comparison, enabling users to benchmark responses against different LLMs (e.g., GPT-4, Claude, Gemini, DeepSeek an others) to identify strengths and weaknesses.
+
 ## Getting Started
 
 First, run the development server:
@@ -26,12 +34,6 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 ## Main Functionality
 
 This project is a LLM Response evaluation tool that allows users to evaluate responses using an AI model or manually. Users can input prompts and their response and do evaluations based on predefined criterias.
-
-### Why ModelArena?
-
-AI Response Evaluation Platform
-
-ModelArena is an open-source tool designed to systematically evaluate the quality of AI model responses. Users can input a prompt and its corresponding AI-generated response, then grade it against customizable criteria such as bias, reasoning accuracy, response structure, hallucinations, and more. The platform supports multi-model comparison, enabling users to benchmark responses against different LLMs (e.g., GPT-4, Claude, Gemini, DeepSeek an others) to identify strengths and weaknesses.
 
 ## Learn More
 
