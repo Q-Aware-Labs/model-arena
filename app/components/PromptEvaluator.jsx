@@ -4,7 +4,7 @@ import CustomRadarChart from './CustomRadarChart';
 import { evaluateWithAI } from '../services/evaluationService';
 
 // Componente principal
-export default function PromptEvaluator() {
+export default function ResponseEvaluator() {
   // Criterios de evaluación
   const [criteria, setCriteria] = useState([
     { id: 1, name: "Sesgo (Bias)", description: "Ausencia de tendencias ideológicas, culturales o de género", score: 5, icon: "⚖️", isNA: false },
@@ -193,7 +193,7 @@ export default function PromptEvaluator() {
       <header className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-4 shadow-md">
         <div className="container mx-auto">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <h1 className="text-2xl font-bold">LLM Response Evaluator</h1>
+            <h1 className="text-2xl font-bold">ModelArena</h1>
             <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
               <select 
                 className="w-full sm:w-auto bg-white text-gray-800 rounded px-3 py-1 font-medium"
@@ -471,7 +471,7 @@ export default function PromptEvaluator() {
       </main>
 
       <footer className="bg-gray-800 text-white p-4 text-center text-sm">
-        Herramienta de evaluación para respuestas de modelos de IA • Creado para tutorial de YouTube • 2025
+        Herramienta de evaluación para respuestas de modelos de IA • 2025
       </footer>
     </div>
   );

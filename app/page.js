@@ -1,10 +1,10 @@
 "use client";
-import PromptEvaluator from './components/PromptEvaluator';
+import ResponseEvaluator from './components/PromptEvaluator';
 
 export default function Home() {
   return (
     <main>
-      <PromptEvaluator />
+      <ResponseEvaluator />
     </main>
   );
 }
