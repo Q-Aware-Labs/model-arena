@@ -17,6 +17,8 @@ AI Response Evaluation Platform
 
 ModelArena is an open-source tool designed to systematically evaluate the quality of AI model responses. Users can input a prompt and its corresponding AI-generated response, then grade it against customizable criteria such as bias, reasoning accuracy, response structure, hallucinations, and more. The platform supports multi-model comparison, enabling users to benchmark responses against different LLMs (e.g., GPT-4, Claude, Gemini, DeepSeek an others) to identify strengths and weaknesses.
 
+![ModelArena](/public/dashboard1.png)
+
 ## Getting Started
 
 First, run the development server:
